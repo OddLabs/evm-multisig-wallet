@@ -1,66 +1,117 @@
-## Foundry
+# 🔐 EVM MultiSig Wallet
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A Foundry implementation of a MultiSig wallet compatible with EVM (Ethereum Virtual Machine). This wallet enables secure storage of tokens and cryptocurrencies, requiring approval from the majority of owners to execute transactions.
 
-Foundry consists of:
+## 📋 Features
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- Support for ETH and ERC-20/ERC-721/ERC-1155 tokens
+- Requires simple majority approval from owners to execute transactions
+- Compatible with all EVM networks (Ethereum, Polygon, BSC, etc.)
+- Developed and tested with Foundry
+- Transaction proposal and execution system
+- Owner management interface
 
-## Documentation
+## 🔧 Requirements
 
-https://book.getfoundry.sh/
+- [Foundry](https://book.getfoundry.sh/getting-started/installation.html)
+- Solidity ^0.8.0
 
-## Usage
+## ⚙️ Installation
 
-### Build
-
-```shell
-$ forge build
+1. Clone the repository:
+```bash
+git clone https://github.com/OddLabs/evm-multisig-wallet.git
+cd evm-multisig-wallet
 ```
 
-### Test
-
-```shell
-$ forge test
+2. Install dependencies:
+```bash
+forge install
 ```
 
-### Format
-
-```shell
-$ forge fmt
+3. Compile contracts:
+```bash
+forge build
 ```
 
-### Gas Snapshots
+## 🧪 Testing
 
-```shell
-$ forge snapshot
+Run tests with:
+
+```bash
+forge test
 ```
 
-### Anvil
+For coverage testing:
 
-```shell
-$ anvil
+```bash
+forge coverage
 ```
 
-### Deploy
+## 📝 Usage
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+### Deployment
+
+1. Set up your environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your private keys and settings
 ```
 
-### Cast
-
-```shell
-$ cast <subcommand>
+2. Deploy the contract:
+```bash
+forge script script/Deploy.s.sol --rpc-url <your-network> --broadcast
 ```
 
-### Help
+### Interacting with the Wallet
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+1. Propose a transaction:
+```solidity
+function proposeTransaction(
+    address target,
+    uint256 value,
+    bytes memory data
+) public returns (uint256 transactionId);
 ```
+
+2. Approve a transaction:
+```solidity
+function approveTransaction(uint256 transactionId) public;
+```
+
+3. Execute an approved transaction:
+```solidity
+function executeTransaction(uint256 transactionId) public;
+```
+
+## 🏗️ Architecture
+
+The project consists of three main contracts:
+
+1. `MultiSigWallet.sol`: Main contract managing transactions and approvals
+2. `MultiSigFactory.sol`: Factory for creating new wallet instances
+3. `MultiSigStorage.sol`: State management and storage
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add: amazing new feature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ⚠️ Security Notice
+
+This project is under development. A full audit is recommended before production use.
+
+## 📞 Contact
+
+Your Name - [@your-twitter](https://twitter.com/your-username)
+
+Project Link: [https://github.com/OddLabs/evm-multisig-wallet](https://github.com/OddLabs/evm-multisig-wallet)
